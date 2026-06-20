@@ -152,12 +152,8 @@ Built By Zakarians at Chowk Azam Campus
 Developed By:
 2nd year class under the supervision of HOD CS Sir Dilawar Hussain at Chowk Azam Campus.
 
-Development Team:
+Developer:
 - Ahmad Mahboob
-- Zeeshan Madni
-- Muhammad Hamid
-- Anees Fazal
-- Other students of 2nd year
 
 Contact: 03026608445`
 }

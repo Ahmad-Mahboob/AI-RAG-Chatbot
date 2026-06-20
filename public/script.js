@@ -4,6 +4,7 @@ const chatbox = document.querySelector('.chatbox');
 const userMessageInput = document.querySelector('#userMessageInput');
 const sendMessageBtn = document.querySelector('.sendMessageBtn');
 const chatbotContent = document.querySelector('.chatbotContent');
+const startChattingBtn = document.querySelectorAll('.startChattingBtn');
 
 let canUserMessage = true;
 
@@ -88,4 +89,8 @@ userMessageInput.addEventListener("keydown", (e) => {
         e.preventDefault();
         sendUserMessage();
     }
+})
+
+startChattingBtn.addEventListener('click', (e) => {
+    startChat();
 })
