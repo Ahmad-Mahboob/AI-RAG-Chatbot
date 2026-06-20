@@ -37,7 +37,9 @@ const sendUserMessage = async () => {
         const body = {
             query: message,
         }
-        const response = await fetch('http://localhost:3000/question', {
+
+        // For hosting on Vercel, /api/question is used. If not hosted on vercel, then you should use /question
+        const response = await fetch('/api/question', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
