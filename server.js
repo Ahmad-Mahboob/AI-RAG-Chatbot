@@ -16,8 +16,8 @@ const showName = (req, res) => {
 }
 
 app.get('/', showName);
-app.post('/storeEmbeddings', storeEmbeddings);
-app.post('/question', handleQuery);
+app.post('/api/storeEmbeddings', storeEmbeddings);
+app.post('/api/question', handleQuery);
 
 app.listen(PORT, () => {
     console.log(`Server is running at: http://localhost:${PORT}`);

@@ -147,10 +147,7 @@ Chatbot Name:
 ZAI Chatbot
 
 Tagline:
-Built By Zakarians at Chowk Azam Campus
-
-Developed By:
-2nd year class under the supervision of HOD CS Sir Dilawar Hussain at Chowk Azam Campus.
+Built By Zakarian at Chowk Azam Campus
 
 Developer:
 - Ahmad Mahboob
