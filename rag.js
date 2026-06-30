@@ -1,11 +1,10 @@
 const supabase = require('./supabaseClient');
 const { getQueryEmbeddings } = require('./question')
 const ai = require('./geminiClient');
-const md = require('marked');
+const { marked } = require('marked');
 
 exports.handleQuery = async (req, res) => {
     const query = req.body.query;
-    const data = await getQueryEmbeddings(query);
     const systemInstruction = `
       You are "ZAI Chatbot" — the official AI assistant of Zakaria Science Academy (ZSA), Chowk Azam Campus.
 
@@ -43,24 +42,31 @@ Formatting Rules:
 
 You represent Zakaria Science Academy (ZSA), Chowk Azam Campus professionally at all times.
     `;
-    const context = data.map((element) => {
-        return element['content'];
-    });
-    console.log("CONTEXT: ", context);
-    const response = await ai.models.generateContent({
-        model: "gemini-3.1-flash-lite",
-        contents: `
+    try {
+        const data = await getQueryEmbeddings(query);
+        const context = data.map((element) => {
+            return element['content'];
+        });
+        console.log("CONTEXT: ", context);
+        const response = await ai.models.generateContent({
+            model: "gemini-3.1-flash-lite",
+            contents: `
         CONTEXT:
         ${context}
 
         QUESTION:
         ${query}
         `,
-        config: {
-            systemInstruction,
-        },
-    });
-    console.log(response.text);
-    const parsedResponse = md.parser(response.text);
-    res.json({ result: parsedResponse });
+            config: {
+                systemInstruction,
+            },
+        });
+        console.log(response.text);
+        const parsedResponse = marked.parse(response.text);
+        console.log("ParseedResponse", parsedResponse);
+        res.json({ result: parsedResponse || response.text });
+    } catch (error) {
+        console.log('Error in handleQuery in rag.js');
+        res.json({ result: error })
+    }
 }

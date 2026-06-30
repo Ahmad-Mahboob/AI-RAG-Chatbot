@@ -20,12 +20,20 @@ const ingestData = async (data, section) => {
         // For Loop to Insert Each Vector Embedding
         let errorMessage;
         for (const text of texts) {
-            const embedding = await generateEmbedding(text);
-            const vector = embedding[0]['values'];
-            const { error } = await supabase.from('documents').insert({ content: text, metadata: { source }, embedding: vector });
-            errorMessage = error;
+            try {
+                const embedding = await generateEmbedding(text);
+                const vector = embedding[0]['values'];
+                const { error } = await supabase.from('documents').insert({ content: text, metadata: { source }, embedding: vector });
+                if (error) {
+                    console.log(error);
+                    throw new Error("Error while inserting 'vectors' in DB.");
+                }
+                return { success: true };
+            } catch (error) {
+                console.log(error);
+                return { success: false };
+            }
         }
-        return errorMessage || '';
 
     }
 }

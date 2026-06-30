@@ -3,15 +3,25 @@ const { generateEmbedding } = require('./embedding')
 
 
 exports.getQueryEmbeddings = async (query) => {
-    const questionEmbedding = await generateEmbedding(query);
-    const embedding = questionEmbedding[0]['values'];
-    const { data, error } = await supabase.rpc(
-        "match_documents",
-        {
-            query_embedding: embedding,
-            match_count: 5,
+
+    try {
+        const questionEmbedding = await generateEmbedding(query);
+        const embedding = questionEmbedding[0]['values'];
+        const { data, error } = await supabase.rpc(
+            "match_documents",
+            {
+                query_embedding: embedding,
+                match_count: 5,
+            }
+        );
+        if (error) {
+            console.log(error);
+            throw new Error('Error while fetching related chunks from DB using match_documents');
         }
-    );
-    console.log("ERROR: ", error);
-    return data;
+        return data;
+
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error while generating embeddings;')
+    }
 }

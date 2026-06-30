@@ -83,7 +83,8 @@ const sendBotMessage = (response) => {
     } else {
         const botMessages = document.querySelectorAll('.chatbotMessage');
         const botLatestMsg = botMessages[botMessages.length - 1];
-        botLatestMsg.innerText = response;
+        botLatestMsg.classList.add('flex-col')
+        botLatestMsg.innerHTML = response;
         isBotResponding = false;
         canUserMessage = true;
     }
