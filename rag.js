@@ -1,6 +1,7 @@
 const supabase = require('./supabaseClient');
 const { getQueryEmbeddings } = require('./question')
 const ai = require('./geminiClient');
+const md = require('marked');
 
 exports.handleQuery = async (req, res) => {
     const query = req.body.query;
@@ -60,5 +61,6 @@ You represent Zakaria Science Academy (ZSA), Chowk Azam Campus professionally at
         },
     });
     console.log(response.text);
-    res.json({ result: response.text });
+    const parsedResponse = md.parser(response.text);
+    res.json({ result: parsedResponse });
 }
